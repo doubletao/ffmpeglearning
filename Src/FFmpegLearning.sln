@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FFmpegLearning", "FFmpegLearning\FFmpegLearning.vcxproj", "{3ABE8356-9BB2-4210-B102-C251132B73CC}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDLVideoPlayer", "SDLVideoPlayer\SDLVideoPlayer.vcxproj", "{338B07D3-5540-4A42-9279-FBA131AF14DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -15,6 +17,10 @@ Global
 		{3ABE8356-9BB2-4210-B102-C251132B73CC}.Debug|x64.Build.0 = Debug|x64
 		{3ABE8356-9BB2-4210-B102-C251132B73CC}.Release|x64.ActiveCfg = Release|x64
 		{3ABE8356-9BB2-4210-B102-C251132B73CC}.Release|x64.Build.0 = Release|x64
+		{338B07D3-5540-4A42-9279-FBA131AF14DB}.Debug|x64.ActiveCfg = Debug|x64
+		{338B07D3-5540-4A42-9279-FBA131AF14DB}.Debug|x64.Build.0 = Debug|x64
+		{338B07D3-5540-4A42-9279-FBA131AF14DB}.Release|x64.ActiveCfg = Release|x64
+		{338B07D3-5540-4A42-9279-FBA131AF14DB}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
