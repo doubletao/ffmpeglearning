@@ -66,6 +66,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>..\..\Lib\$(TargetName).lib</ImportLibrary>
+      <AdditionalLibraryDirectories>..\..\Lib\LibFFmpeg</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -86,13 +87,16 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>..\..\Lib\$(TargetName).lib</ImportLibrary>
+      <AdditionalLibraryDirectories>..\..\Lib\LibFFmpeg</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FFmpegVADecoder.cpp" />
+    <ClCompile Include="VADecoder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\FFmpegVADecoder.h" />
+    <ClInclude Include="VADecoder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

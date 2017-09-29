@@ -5,9 +5,9 @@
 #pragma comment(lib, "SDL2main.lib")
 
 VideoPlayer::VideoPlayer()
-	: screen(NULL)
-	, sdlRenderer(NULL)
-	, sdlTexture(NULL)
+	: screen(nullptr)
+	, sdlRenderer(nullptr)
+	, sdlTexture(nullptr)
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER)) 
 	{
@@ -22,15 +22,15 @@ VideoPlayer::~VideoPlayer()
 	SDL_Quit();
 }
 
-int VideoPlayer::IntialWnd(unsigned int nFormat, int nWidth, int nHeight)
+int VideoPlayer::IntialWnd(unsigned int nFormat, int x, int y, int nWidth, int nHeight)
 {
 	//先创建screen
-	screen = SDL_CreateWindow("Simplest ffmpeg player's Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+	screen = SDL_CreateWindow("Simplest ffmpeg player's Window", x, y,
 		nWidth, nHeight, SDL_WINDOW_OPENGL);
 	if (!screen) 
 	{
 		printf("SDL: could not create window - exiting:%s\n", SDL_GetError());
-		return -1;
+		return 0;
 	}
 
 	//创建渲染器
@@ -40,14 +40,14 @@ int VideoPlayer::IntialWnd(unsigned int nFormat, int nWidth, int nHeight)
 	if (!sdlRenderer)
 	{
 		printf("SDL: could not create renderer - exiting:%s\n", SDL_GetError());
-		return -1;
+		return 0;
 	}
 	//创建纹理
 	sdlTexture = SDL_CreateTexture(sdlRenderer, nFormat, SDL_TEXTUREACCESS_STREAMING, nWidth, nHeight);
 	if (!sdlTexture)
 	{
 		printf("SDL: could not create texture - exiting:%s\n", SDL_GetError());
-		return -1;
+		return 0;
 	}
 
 	return 1;
@@ -56,9 +56,9 @@ int VideoPlayer::IntialWnd(unsigned int nFormat, int nWidth, int nHeight)
 int VideoPlayer::PushFrame(unsigned char * data, int linesize)
 {
 	//将数据刷出来
-	SDL_UpdateTexture(sdlTexture, NULL, data, linesize);
+	SDL_UpdateTexture(sdlTexture, nullptr, data, linesize);
 	SDL_RenderClear(sdlRenderer);
-	SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
+	SDL_RenderCopy(sdlRenderer, sdlTexture, nullptr, nullptr);
 	SDL_RenderPresent(sdlRenderer);
 	return 1;
 }

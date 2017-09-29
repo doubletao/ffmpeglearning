@@ -5,34 +5,29 @@
 #include <assert.h>
 #include "SDLVideoPlayer.h"
 #include "SDL2\SDL.h"
+#include "FFmpegVADecoder.h"
 #pragma comment(lib, "SDL2.lib")
 #pragma comment(lib, "SDL2main.lib")
 
 int main()
 {
+	FFmpegVADecoder codec;
+	codec.OpenFile("F:\\Media\\超人总动员.AVI");
+	int nWidth;
+	int nHeight;
+	AVPixelFormat emPixFmt;
+	codec.GetVideoBasicInfo(nWidth, nHeight, emPixFmt);
+	//根据视频信息初始化窗口
 	SDLVideoPlayer player;
-	player.IntialWnd(SDL_PIXELFORMAT_ABGR8888, 960, 528);
-	const int nSize = 100;
-	SDL_Surface * surFace[nSize];
-	char szFileName[256];
-	for (size_t i = 0; i < nSize; i++)
+	player.IntialWnd(SDL_PIXELFORMAT_IYUV, 500, 300, nWidth, nHeight);
+	unsigned char * pData = nullptr;
+	int nLineSize = 0;
+	while (codec.DecodeOneFrame(pData, nLineSize))
 	{
-		memset(szFileName, 0, 256);
-		SDL_snprintf(szFileName, 256, "C:\\Users\\dujiangtao\\Desktop\\bmp\\%d.bmp", i + 1);
-		surFace[i] = SDL_LoadBMP(szFileName);
-		if (!surFace[i])
-		{
-			printf("Could not load bmp- %s\n", SDL_GetError());
-			assert(false);
-		}
+		player.PushFrame(pData, nLineSize);
+		SDL_Delay(20);
 	}
-	int nIndex = 0;
-	while (nIndex < nSize)
-	{
-		player.PushFrame((unsigned char *)surFace[nIndex]->pixels, surFace[nIndex]->pitch);
-		SDL_Delay(50);
-		nIndex++;
-	}
+	system("pause");
     return 0;
 }
 

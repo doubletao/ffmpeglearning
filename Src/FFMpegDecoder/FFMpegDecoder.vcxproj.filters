@@ -18,9 +18,15 @@
     <ClCompile Include="FFmpegVADecoder.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="VADecoder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\FFmpegVADecoder.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="VADecoder.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
