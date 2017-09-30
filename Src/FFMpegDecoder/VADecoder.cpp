@@ -6,7 +6,7 @@
 #pragma comment(lib, "avutil.lib")
 //#pragma comment(lib, "postproc.lib")
 //#pragma comment(lib, "swresample.lib")
-#pragma comment(lib, "swscale.lib")
+//#pragma comment(lib, "swscale.lib")
 
 VADecoder::VADecoder()
 	: nVideoIndex(-1)
@@ -16,8 +16,6 @@ VADecoder::VADecoder()
 	, pCodec(nullptr)
 	, packet(nullptr)
 	, pFrame(nullptr)
-	, pFrameYUV(nullptr)
-	, outerbuffer(nullptr)
 {
 }
 
@@ -71,20 +69,7 @@ int VADecoder::OpenFile(const char * szFilePath)
 								//根据解码上下文打开解码器
 								if (avcodec_open2(pCodecCtx, pCodec, nullptr) == 0)
 								{
-									outerbuffer = (unsigned char *)av_malloc(av_image_get_buffer_size(pCodecCtx->pix_fmt,
-										pCodecCtx->width, pCodecCtx->height, 1));
-									pFrameYUV = av_frame_alloc();
-#if 0
-									//颜色空间转换及缩放逻辑，先跳过
-									unsigned char * outerbuffer = (unsigned char *)av_malloc(av_image_get_buffer_size(pCodecCtx->pix_fmt,
-										pCodecCtx->width, pCodecCtx->height, 1));
-									AVFrame	* pFrameYUV = nullptr;
-									av_image_fill_arrays(pFrameYUV->data, pFrameYUV->linesize, outerbuffer, pCodecCtx->pix_fmt,
-										pCodecCtx->width, pCodecCtx->height, 1);
-									SwsContext * imgConvertCtx = sws_getContext(pCodecCtx->width, pCodecCtx->height, pCodecCtx->pix_fmt,
-										pCodecCtx->width, pCodecCtx->height, )
-#endif
-										return 1;
+									return 1;
 								}
 								else
 								{
@@ -146,7 +131,7 @@ int VADecoder::GetVideoBasicInfo(int & nWidth, int & nHeight, AVPixelFormat & em
 	}
 }
 
-int VADecoder::DecodeOneFrame(unsigned char *& data, int & linesize)
+int VADecoder::DecodeOneFrame(unsigned char **& data, int *& linesize)
 {
 	packet = (AVPacket *)av_malloc(sizeof(AVPacket));
 	pFrame = av_frame_alloc();
@@ -170,19 +155,8 @@ int VADecoder::DecodeOneFrame(unsigned char *& data, int & linesize)
 				int nRet = -1;
 				if ((nRet = avcodec_receive_frame(pCodecCtx, pFrame)) == 0)
 				{
-					//linesize = pFrame->linesize[0];
-					//data = pFrame->data[0];
-
-					//在这把颜色空间转换给做了，转成RGB的
-					av_image_fill_arrays(pFrameYUV->data, pFrameYUV->linesize, outerbuffer, pCodecCtx->pix_fmt,
-						pCodecCtx->width, pCodecCtx->height, 1);
-					SwsContext * imgConvertCtx = sws_getContext(pCodecCtx->width, pCodecCtx->height, pCodecCtx->pix_fmt,
-						pCodecCtx->width, pCodecCtx->height, AV_PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
-					sws_scale(imgConvertCtx, pFrame->data, pFrame->linesize, 0, pFrame->height, pFrameYUV->data,
-						pFrameYUV->linesize);
-
-					data = pFrameYUV->data[0];
-					linesize = pFrameYUV->linesize[0];
+					linesize = pFrame->linesize;
+					data = pFrame->data;
 					return 1;
 				}
 				else
@@ -241,10 +215,6 @@ int VADecoder::CloseFile()
 	if (pFormatCtx)
 	{
 		avformat_free_context(pFormatCtx);
-	}
-	if (pFrameYUV)
-	{
-		av_frame_free(&pFrameYUV);
 	}
 	return 1;
 }

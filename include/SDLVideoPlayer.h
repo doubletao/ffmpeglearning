@@ -20,4 +20,5 @@ public:
 public:
 	int IntialWnd(unsigned int nFormat, int x, int y, int nWidth, int nHeight);
 	int PushFrame(unsigned char * data, int linesize);
+	int PushYUVFrame(unsigned char **& data, int *& linesize);
 };

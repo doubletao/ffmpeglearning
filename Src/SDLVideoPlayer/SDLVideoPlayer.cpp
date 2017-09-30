@@ -31,3 +31,8 @@ int SDLVideoPlayer::PushFrame(unsigned char * data, int linesize)
 {
 	return StaticCast(m_wndPlayer)->PushFrame(data, linesize);
 }
+
+int SDLVideoPlayer::PushYUVFrame(unsigned char **& data, int *& linesize)
+{
+	return StaticCast(m_wndPlayer)->PushYUVFrame(data, linesize);
+}

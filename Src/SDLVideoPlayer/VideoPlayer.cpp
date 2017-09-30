@@ -62,3 +62,16 @@ int VideoPlayer::PushFrame(unsigned char * data, int linesize)
 	SDL_RenderPresent(sdlRenderer);
 	return 1;
 }
+
+int VideoPlayer::PushYUVFrame(unsigned char **& data, int *& linesize)
+{
+	//将数据刷出来
+	SDL_UpdateYUVTexture(sdlTexture, nullptr
+		, data[0], linesize[0]
+		, data[1], linesize[1]
+		, data[2], linesize[2]);
+	SDL_RenderClear(sdlRenderer);
+	SDL_RenderCopy(sdlRenderer, sdlTexture, nullptr, nullptr);
+	SDL_RenderPresent(sdlRenderer);
+	return 1;
+}

@@ -29,7 +29,7 @@ int FFmpegVADecoder::GetVideoBasicInfo(int & nWidth, int & nHeight, AVPixelForma
 	return StaticCast(m_pDecoder)->GetVideoBasicInfo(nWidth, nHeight, emPixFmt);
 }
 
-int FFmpegVADecoder::DecodeOneFrame(unsigned char *& data, int & linesize)
+int FFmpegVADecoder::DecodeOneFrame(unsigned char **& data, int *& linesize)
 {
 	return StaticCast(m_pDecoder)->DecodeOneFrame(data, linesize);
 }

@@ -21,5 +21,5 @@ public:
 public:
 	int OpenFile(const char * szFilePath);
 	int GetVideoBasicInfo(int & nWidth, int & nHeight, AVPixelFormat & emPixFmt);
-	int DecodeOneFrame(unsigned char *& data, int & linesize);
+	int DecodeOneFrame(unsigned char **& data, int *& linesize);
 };
